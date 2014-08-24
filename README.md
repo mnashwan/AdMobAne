@@ -20,45 +20,30 @@ Admob Native Extension for Adobe Air
 
 This  AdMob will add the support to use AdMob Mobile monetization platform with Adobe Air.
 The Extension support Android Platform and iOS Platform.
-Different Packages are available according to the needs'
+Different Packages are available according to the application targets:
 - Android Only
 - iOS Oly
 - Both Platforms
 
-This is the Only Native extension available for Adobe Air, which offer a complete coverage of every function and possibility offer by AdMob.
-Moreover the Extension has been compiled and maintained with the very latest AdMob SDK for either Android and iOS!
+##Admob SDK Details
+- Android: Google Play services ver. 5.0
+- iOS: Admob SDK 6.11.1 (Admob SDK 6.8.0 in iOS 4.3 compatible version)
 
-VERY IMPORTANT:
-- Every Native Extension out there are make from old SDK, which, in the case of android, will not be accepted anymore in Google play from 1 Aug. 2014. While in iOS the old SDK will not pass the Application approval from Apple.
-
-##What is AdMob?
-
-AdMob is the world's largest mobile advertising platforms which serve more than 40 billion mobile banner and text ads per month across mobile Web sites and handset applications
-
-http://www.google.com/ads/admob/
+##Device Compatibility:
+Android: From version 2.3<br>
+iOS: From version 4.3<br>
 
 ##Features:
-- Allow Multiple Banners for Application
-This permit two have, one, two or more banner visible and manageable in the same application view.
-Or to have several banner pre-cached and show/hide on demand.
-
+- Set Render mode type (Android Only)
+- Set Specific test Device ID
+- Create Single or Multiple Banners for Application
+- Move Banner, allow also to animate the banner
 - Full Interstitial Ads Management and Pre-caching
-
 - Full Request Customization
-- Support Any adMob Size:
-```javascript
-BANNER
-LARGE_BANNER
-MEDIUM_RECTANGLE
-FULL_BANNER
-LEADERBOARD
-WIDE_SKYSCRAPER // Currently disable (not supported by AdMob)
-SMART_BANNER
-SMART_BANNER_PORT
-SMART_BANNER_LAND
-```
-
-- Auto relative Docking for:
+- Get Banner Dimensions
+- Get Device Screen Dimension
+- Custom Absolute Position
+- Auto relative Docking position for:
 ```javascript
 TOP_LEFT
 TOP_CENTER
@@ -70,32 +55,21 @@ BOTTOM_LEFT
 BOTTOM_CENTER
 BOTTOM_RIGHT
 ```
-
-- Custom Absolute Position
-
-- Extensive in line AsDoc Documentation
-
-- Full Extension Documentation in /Documentation
-
-##Admob SDK Details
-- Android: Google Play services ver. 5.0
-- iOS: Admob SDK 6.11.1 (Admob SDK 6.8.0 in iOS 4.3 compatible version)
-
-##Further Info:
-Android:
-The Extension is build using the latest Google Play service (rev.17) library which will guaranty the application approval also after 01 Aug. 2014
-
-iOS:
-The Extension is build using the latest 6.11.1 AdMob SDK, in xCode 5.1.1 using iOS SDK 7.1.which will guaranty the apple store approval for the application by Apple.
-
-##Device Compatibility:
-Android: From version 2.2
-iOS: From version 4.3
+- Support Any adMob Size:
+```javascript
+BANNER
+MEDIUM_RECTANGLE
+LARGE_BANNER
+FULL_BANNER
+LEADERBOARD
+WIDE_SKYSCRAPER
+SMART_BANNER
+SMART_BANNER_PORT
+SMART_BANNER_LAND
+```
 
 ##Install the library
-
-Add the AdMob ANE library to your project.
-
+Add the AdMob ANE library to your project.<br>
 In Flash Builder 4.7:
 
   1. Go to Project Properties
@@ -104,8 +78,8 @@ In Flash Builder 4.7:
   4. Select Actionscript Build Packaging > Google Android, Apple IOS or Both
   5. Select the Native Extensions tab, and click the 'Package' check box next to the extension
 
-Please note:
-When adding the ANE be sure to have the checkbox "Update Air Application Descriptor" selected.
+Please note:<br>
+When adding the ANE be sure to have the checkbox "Update Air Application Descriptor" selected.<br>
 If it is not selected make certain that the application Id is available in the Air Application Descriptor as follow:
 ```xml
 <extensions>
@@ -131,17 +105,32 @@ if(adMobManager.isSupported){
 }
 ```
 
-Set Manager Verbose Mode [Optional]
+Set Manager Verbose Mode [Optional]<br>
 The Verbose mode will allow to have debug output from all places, AS, Java and iOS console
 ```javascript
 adMobManager.verbose = true;
 ```
 
-Set Manager Operation Mode [Optional... Until Operation]
-This setting will allow to set the extension in either test mode or operation mode.
+Set The Render mode [Optional, default Hardware]<br>
+This setting will allow to set the render mode for the banner.<br>
+The available setting are None, Hardware and Software. The use of the render mode vary according to the application.
+```javascript
+adMobManager.renderLayerType = AdMobManager.RENDER_TYPE_HARDWARE;
+
+```
+
+Set Manager Operation Mode [Optional... Until Operation]<br>
+This setting will allow to set the extension in either test mode or operation mode.<br>
 By default the extension will work in Test Mode, when the application needs to be release it will be needed to switch the operation into Production mode
 ```javascript
 adMobManager.operationMode = AdMobManager.TEST_MODE;
+
+```
+
+Set The test device ID<br>
+This setting will prevent impression counts during testing for the specified ID.
+```javascript
+adMobManager.testDeviceID = "MY_DEVICE_ID";
 
 ```
 
@@ -200,140 +189,109 @@ This getter will allow to get the information of which device is currently in us
 ```javascript
 var device:String = adMobManager.device;
 ```
+Get the Current Screen Size
+```javascript
+var screenSize:ScreenSize =  AdsManager.getScreenSize();
+```
+Get a Standard Banner Size
+```javascript
+var adSize:AdSize =  AdsManager.getBannerSize(AdMobSize.BANNER);
+```
+Get the Specific Banner Size in the Screen after the banner Creation
+```javascript
+var adSize:AdSize =  AdsManager.getExistingBannerSize("BottomBanner");
+```
 
-Create an AdMob Banner in an relative Position
+Create an AdMob Banner in an relative Position<br>
 The parameter ae as follow:
-
-Banner Size [Mandatory]
-- Banner specific size
-
-Banner Position [Mandatory]
-- Banner specific Position
-
-Banner Id [Optional]
-- Useful when you wish to create more than one banner.
-If an id is not specified a random id will be generated
-
-AdMobId [Optional]
-- Banner specific AdMobId, Useful if you are tracking the banner result assigning individual id.
-If an id is not specified the common id will be used.
-
-AutoShow Option [Optional]
-- This option allow to automatically show the banner one it is loaded.
-The default value is set to false, so you can load the banner in cache and show it only on specific application phases
+- Banner Size (Banner specific size)
+- Banner Position (Banner specific Position)
+- Banner Id (Useful when you wish to create more than one banner.If an id is not specified a random id will be generated)
+- AdMobId (Banner specific AdMobId, Useful if you are tracking the banner result assigning individual id. If an id is not specified the common id will be used.)
+- AutoShow Option (This option allow to automatically show the banner one it is loaded.)
 ```javascript
-adMobManager.createBanner(AdMobSize.BANNER,AdMobPosition.BOTTOM_CENTER,"BottomBanner1", null, true);
+adMobManager.createBanner(AdMobSize.BANNER,AdMobPosition.BOTTOM_CENTER,"BottomBanner", null, true);
 ```
 
-Create an AdMob Banner in an absolute Position
+Create an AdMob Banner in an absolute Position<br>
 The parameter ae as follow:
-
-Banner Size [Mandatory]
-- Banner specific size
-
-Banner X Position [Mandatory]
-- Banner specific X Position
-
-Banner Y Position [Mandatory]
-- Banner specific Y Position
-
-Banner Id [Optional]
-- Useful when you wish to create more than one banner.
-If an id is not specified a random id will be generated
-
-AdMobId [Optional]
-- Banner specific AdMobId, Useful if you are tracking the banner result assigning individual id.
-If an id is not specified the common id will be used.
-
-AutoShow Option [Optional]
-- This option allow to automatically show the banner one it is loaded.
-The default value is set to false, so you can load the banner in cache and show it only on specific application phases
+- Banner Size (Banner specific size)
+- Banner X Position (Banner specific X Position)
+- Banner Y Position (Banner specific Y Position)
+- Banner Id (Useful when you wish to create more than one banner.If an id is not specified a random id will be generated)
+- AdMobId (Banner specific AdMobId, Useful if you are tracking the banner result assigning individual id. If an id is not specified the common id will be used.)
+- AutoShow Option (This option allow to automatically show the banner one it is loaded.)
 ```javascript
-adMobManager.createBannerAbsolute(AdMobSize.BANNER,100, 200, "BottomBanner1", null, true);
+adMobManager.createBannerAbsolute(AdMobSize.BANNER,100, 200, "BottomBanner", null, true);
 ```
 
-Show a specific Banner
-The function will allow to show a specific banner, recognized by its Id.
-This is specifically useful when your app wish to manage several ads.
+Move a specific Banner after creation<br>
+
+The function will allow to move a specific banner, recognized by its Id.<br>
+This allow to also create banner animation when the banner is created<br>
 The parameter are as follow:
-Banner Id [Mandatory]
-- Specific banner Id for the banner to be show
+- Banner Id (Specific banner Id for the banner to be move)
+- Banner X Position (Banner specific X Position)
+- Banner Y Position (Banner specific Y Position)
 ```javascript
-adMobManager.showBanner("BottomBanner1");
+adMobManager.moveBanner(bannerId,posX,posY);
 ```
 
-Hide a specific Banner
-The function will allow to hide a specific banner, recognized by its Id.
-This is specifically useful when your app wish to manage several ads.
+Show a specific Banner<br>
+The function will allow to show a specific banner, recognized by its Id.<br>
+This is specifically useful when your app wish to manage several ads.<br>
 The parameter are as follow:
-Banner Id [Mandatory]
-- Specific banner Id for the banner to be hide
+- Banner Id (Specific banner Id for the banner to be show)
 ```javascript
-adMobManager.hideBanner("BottomBanner1");
+adMobManager.showBanner("BottomBanner");
 ```
 
-Remove a specific Banner
-The function will allow to remove a specific banner, recognized by its Id.
-This is specifically useful when your app wish to manage several ads.
+Hide a specific Banner<br>
+The function will allow to hide a specific banner, recognized by its Id.<br>
+This is specifically useful when your app wish to manage several ads.<br>
 The parameter are as follow:
-Banner Id [Mandatory]
-- Specific banner Id for the banner to be removed
+- Banner Id (Specific banner Id for the banner to be hide)
 ```javascript
-adMobManager.removeBanner("BottomBanner1");
+adMobManager.hideBanner("BottomBanner");
 ```
 
-Show all existing hidden banners
+Remove a specific Banner<br>
+The function will allow to remove a specific banner, recognized by its Id.<br>
+This is specifically useful when your app wish to manage several ads.<br>
+The parameter are as follow:
+- Banner Id (Specific banner Id for the banner to be moved)
+```javascript
+adMobManager.removeBanner("BottomBanner");
+```
+
+Show all existing hidden banners<br>
 The function will show all available banners
 ```javascript
 adMobManager.showAllBanner();
 ```
 
-Hide all existing hidden banners
+Hide all existing hidden banners<br>
 The function will hide all available banners
 ```javascript
 adMobManager.hideAllBanner();
 ```
 
-Remove all existing hidden banners
+Remove all existing hidden banners<br>
 The function will remove all available banners
 ```javascript
 adMobManager.removeAllBanner();
 ```
 
-Create the AdMob Interstitial
+Create the AdMob Interstitial<br>
 The parameter are as follow:
-
-AdMobId [Optional]
-- Interstitial specific AdMobId.
-If an id is not specified the common id will be used.
-
-AutoShow Option [Optional]
-- This option allow to automatically show the banner one it is loaded.
-The default value is set to false, so you can load the banner in cache and show it only on specific application phases
-* Please note, in iOS the Interstitial will ALWAYS be automatically show regardless of the setting.
+- Interstitial AdMobId (specific AdMobId. If an id is not specified the common id will be used.)
+- AutoShow Option (This option allow to automatically show the Interstitial one it is loaded.)
 ```javascript
 adMobManager.createInterstitial(null,true);
 ```
 
-Cache the AdMob Interstitial
-* Android Only
-The parameter ae as follow:
-
-AdMobId [Optional]
-- Banner speciic AdMobId, Useful if you are tracking the banner result assigning individual id.
-If an id is not specified the common id will be used.
-
-AutoShow Option [Optional]
-- This option allow to automatically show the banner one it is loaded.
-The default value is set to false, so you can load the banner in cache and show it only on specific application phases
-* Please note, in iOS the Interstitial will ALWAYS be automatically show regardless of the setting.
-```javascript
-adMobManager.cacheInterstitial(null,true);
-```
-
-Show the AdMob Interstitial
+Show the AdMob Interstitial<br>
 The function will show the cached AdMob Interstitial
-* Android Only
 ```javascript
 adMobManager.showInterstitial();
 ```
@@ -343,98 +301,67 @@ Check the Interstitial load state
 var state:Boolean = adMobManager.isInterstitialLoaded();
 ```
 
-Remove the AdMob Interstitial
-The function will allow to remove the Interstitial when needed.
+Remove the AdMob Interstitial<br>
+The function will allow to remove the Interstitial when needed.<br>
 This is specifically usefull when there is the need to remove an Interstitial without the user interaction.
 ```javascript
 adMobManager.removeInterstitial();
 ```
 
 ##Listen to Events
-In order to listen to event you need to attache the event listener to the extension dispatcher.
+In order to listen to event you need to attache the event listener to the extension dispatcher.<br>
 The easiest way is to create an internal dispatcher instance:
 ```javascript
-/**
- * Extension event dispatcher instance
- **/
 private function get dispatcher():EventDispatcher
-{
-    // Return the extension dispatcher
-    return adMobManager.dispatcher;
-}
+{ return adMobManager.dispatcher; }
 ```
 
 Then you can add all the listener for the event you need:
 ```javascript
-// onBannerLoaded Event Listener
-if (!dispatcher.hasEventListener(AdMobEvent.BANNER_LOADED))
     dispatcher.addEventListener(AdMobEvent.BANNER_LOADED, onBannerLoaded);
 
-
-/**
- * onBannerLoaded Event listener
- *
- * @param e AdMobEvent Object
- **/
 static private function onBannerLoaded(e:AdMobEvent):void
 {
-    // Do Something like show the banner...
-    adMobManager.showAllBanner();
+    // Do Something...
 }
 ```
 
-The event will also pass the banner id for the banner who did dispatch the event.
-The example above will show all the banner, if you wish to, for example, show only
+The event will also pass the banner id for the banner who did dispatch the event.<br>
+The example above will show all the banner, if you wish to, for example, show only<br>
 the specific banner who did dispatch the event you can do as follow:
 
 ```javascript
-/**
- * onBannerLoaded Event listener
- *
- * @param e AdMobEvent Object
- **/
 static private function onBannerLoaded(e:AdMobEvent):void
 {
     // Show the specific banner who did dispatch the event
-    // e.data:String = Banner unique ID
     adMobManager.showBanner(e.data);
 }
 ```
 
-One of the most important characteristic of Admob ANE Extension is that
-it was develop aimed to allow multiple banner instance to be used and managed while
-available in cache. For this reason all the event will always pass the Banner id s parameter.
-This include also the error Event.
-If you need to check the error events details simply set the verbose mode to "true" then all the
-details will be available in the console logs.
-
 The Extension available Event are as follow:
 ```javascript
-BANNER_LOADED // The banner has been received and it is ready to be show
-BANNER_FAILED_TO_LOAD // There was an error with the banner request. most of the time, it is a wrong adMobId or missing connection
-BANNER_AD_OPENED // The banner has been clicked by the user
-BANNER_AD_CLOSED // The User left the banner destination (webpage/store) and is returning to the application
-BANNER_LEFT_APPLICATION // The banner has been remove from the application
-INTERSTITIAL_LOADED // The Interstitial has been received and it is ready to be show (iOS will be show directly)
-INTERSTITIAL_FAILED_TO_LOAD // There was an error with the Interstitial request. most of the time, it is a wrong adMobId or missing connection
-INTERSTITIAL_AD_OPENED // The Interstitial has been clicked by the user
-INTERSTITIAL_AD_CLOSED // The Interstitial has been remove from the application (especially useful for listen when the user close the Interstitial)
-INTERSTITIAL_LEFT_APPLICATION // The User left the Interstitial destination (webpage/store) and is returning to the application
+BANNER_LOADED
+BANNER_FAILED_TO_LOAD
+BANNER_AD_OPENED
+BANNER_AD_CLOSED
+BANNER_LEFT_APPLICATION
+INTERSTITIAL_LOADED
+INTERSTITIAL_FAILED_TO_LOAD
+INTERSTITIAL_AD_OPENED
+INTERSTITIAL_AD_CLOSED
+INTERSTITIAL_LEFT_APPLICATION
 ```
 
 ##Setup for Android
-
-Update Your Application Descriptor
-
-You'll need to be using the AIR 3.1 SDK or higher, include the extension in your Application Descriptor XML, and update the Android Manifest Additions with additional settings.
-
-Add the following settings in <manifest> tag.
+Update Your Application Descriptor<br>
+You'll need to be using the AIR 3.1 SDK or higher, include the extension in your Application Descriptor XML, and update the Android Manifest Additions with additional settings.<br>
+Add the following settings in "manifest" tag.
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
-Add the following settings in <application> tag.
+Add the following settings in "application" tag.
 ```xml
 <meta-data android:name="com.google.android.gms.version" android:value="4452000"/>
 <activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
@@ -455,3 +382,4 @@ distributed under the License is distributed on an "AS IS" BASIS,<br>
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<br>
 See the License for the specific language governing permissions and<br>
 limitations under the License.
+
