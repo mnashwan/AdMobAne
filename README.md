@@ -234,7 +234,7 @@ The parameter are as follow:
 - Banner X Position (Banner specific X Position)
 - Banner Y Position (Banner specific Y Position)
 ```javascript
-adMobManager.moveBanner(bannerId,posX,posY);
+adMobManager.moveBanner("BottomBanner",0,100);
 ```
 
 Show a specific Banner<br>
@@ -264,19 +264,19 @@ The parameter are as follow:
 adMobManager.removeBanner("BottomBanner");
 ```
 
-Show all existing hidden banners<br>
+Show all existing banners<br>
 The function will show all available banners
 ```javascript
 adMobManager.showAllBanner();
 ```
 
-Hide all existing hidden banners<br>
+Hide all existing banners<br>
 The function will hide all available banners
 ```javascript
 adMobManager.hideAllBanner();
 ```
 
-Remove all existing hidden banners<br>
+Remove all existing banners<br>
 The function will remove all available banners
 ```javascript
 adMobManager.removeAllBanner();
