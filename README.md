@@ -197,7 +197,7 @@ Get a Standard Banner Size
 ```javascript
 var adSize:AdSize =  AdsManager.getBannerSize(AdMobSize.BANNER);
 ```
-Get the Specific Banner Size in the Screen after the banner Creation
+Get the Specific and actual Banner Size in pixels after the banner Creation
 ```javascript
 var adSize:AdSize =  AdsManager.getExistingBannerSize("BottomBanner");
 ```
