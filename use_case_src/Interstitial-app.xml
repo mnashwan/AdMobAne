@@ -250,8 +250,6 @@
 							<category android:name="android.intent.category.LAUNCHER"/>
 						</intent-filter>
 					</activity>
-					<meta-data android:name="com.google.android.gms.version" android:value="4452000"/>
-					<activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 				</application>
             		</manifest>
 		]]>
@@ -268,11 +266,17 @@
 			<manifest android:installLocation="auto">
 				<uses-permission android:name="android.permission.INTERNET"/>
 				<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-				<application android:hardwareAccelerated="true">
+				<application android:enabled="true">
+					<activity android:excludeFromRecents="false">
+						<intent-filter>
+							<action android:name="android.intent.action.MAIN"/>
+							<category android:name="android.intent.category.LAUNCHER"/>
+						</intent-filter>
+					</activity>
 					<meta-data android:name="com.google.android.gms.version" android:value="4452000"/>
 					<activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-				</application>				
-			</manifest>
+				</application>
+            		</manifest>
 		]]></manifestAdditions>
     </android>
     <iPhone>
